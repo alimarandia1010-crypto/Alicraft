@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Tahoma, sans-serif; text-align: center; padding: 50px; }
+        .menu-container { display: flex; justify-content: center; gap: 20px; }
+        .btn { padding: 15px 30px; cursor: pointer; border: none; border-radius: 8px; background: #3498db; color: white; font-size: 18px; }
+        .soon { background: #95a5a6; cursor: not-allowed; }
+        .submenu { display: none; margin-top: 10px; flex-direction: column; gap: 10px; }
+        .key-option { display: block; padding: 10px; background: #f1c40f; text-decoration: none; color: black; border-radius: 5px; margin: 5px; }
+    </style>
+</head>
+<body>
+
+    <h1>فروشگاه سرور</h1>
+
+    <div class="menu-container">
+        <!-- Rank -->
+        <div>
+            <button class="btn soon">رنک (به زودی)</button>
+        </div>
+
+        <!-- Kit -->
+        <div>
+            <button class="btn soon">کیت (به زودی)</button>
+        </div>
+
+        <!-- Key -->
+        <div>
+            <button class="btn" onclick="toggleSubmenu()">کلید 🔑</button>
+            <div id="key-submenu" class="submenu">
+                <a href="https://ble.ir/rankserverali_bot" class="key-option">طلا 🥇 - ۵۰ تومان</a>
+                <a href="https://ble.ir/rankserverali_bot" class="key-option">نقره 🥈 - ۲۰ تومان</a>
+                <a href="https://ble.ir/rankserverali_bot" class="key-option">الماس 💎 - ۱۰۰ تومان</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSubmenu() {
+            var sub = document.getElementById("key-submenu");
+            sub.style.display = (sub.style.display === "flex") ? "none" : "flex";
+        }
+    </script>
+</body>
+</html>
