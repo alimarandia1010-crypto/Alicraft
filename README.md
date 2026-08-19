@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VOIDLAND | THE ULTIMATE EXPERIENCE</title>
+    <style>
+        /* ۱. RESET & BASE */
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; scroll-behavior: smooth; }
+        
+        body {
+            background: #050505;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ۲. GOD-LEVEL ANIMATED BACKGROUND */
+        .bg-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, #1a0b2e 0%, #050505 100%);
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.5;
+            animation: orbit 25s infinite linear;
+        }
+
+        @keyframes orbit {
+            from { transform: rotate(0deg) translateX(150px) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(150px) rotate(-360deg); }
+        }
+
+        /* ۳. CUSTOM CURSOR & CLICK EFFECT */
+        #cursor {
+            position: fixed;
+            width: 20px; height: 20px;
+            background: rgba(0, 255, 127, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease;
+            box-shadow: 0 0 20px #00ff7f, 0 0 40px #00ff7f;
+        }
+
+        .click-flare {
+            position: absolute;
+            width: 10px; height: 10px;
+            background: #00ff7f;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: flare 0.6s ease-out forwards;
+            z-index: 10000;
+        }
+
+        @keyframes flare {
+            0% { transform: scale(1); opacity: 1; box-shadow: 0 0 20px #00ff7f; }
+            100% { transform: scale(10); opacity: 0; }
+        }
+
+        /* ۴. MAIN LAYOUT */
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 20px;
+            z-index: 1;
+            width: 100%;
+        }
+
+        /* لوگو */
+        .logo-container {
+            position: relative;
+            margin-bottom: 40px;
+            animation: floatLogo 4s infinite ease-in-out;
+        }
+
+        .logo {
+            width: 240px;
+            filter: drop-shadow(0 0 25px rgba(138, 43, 226, 0.8));
+            border-radius: 20px;
+        }
+
+        @keyframes floatLogo {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-15px) scale(1.03); }
+        }
+
+        /* ۵. IP CARD & STATUS */
+        .ip-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            padding: 25px;
+            border-radius: 25px;
+            text-align: center;
+            width: 100%;
+            max-width: 450px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            background: rgba(0, 255, 127, 0.2);
+            color: #00ff7f;
+            margin-bottom: 15px;
+            border: 1px solid #00ff7f;
+            box-shadow: 0 0 10px rgba(0, 255, 127, 0.3);
+        }
+
+        .ip-address {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #00ff7f;
+            text-shadow: 0 0 15px rgba(0, 255, 127, 0.5);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ۶. BUTTONS */
+        .btn-premium {
+            background: linear-gradient(90deg, #8a2be2, #bf00ff, #8a2be2);
+            background-size: 200% auto;
+            padding: 15px 40px;
+            border-radius: 12px;
+            color: white;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.1rem;
+            box-shadow: 0 10px 25px rgba(191, 0, 255, 0.4);
+            transition: 0.4s;
+            animation: shine 3s linear infinite;
+            margin-bottom: 50px;
+        }
+
+        @keyframes shine { to { background-position: 200% center; } }
+        .btn-premium:hover { transform: scale(1.05); box-shadow: 0 15px 35px rgba(191, 0, 255, 0.6); }
+
+        /* ۷. INFORMATION SECTIONS (Bento Grid Style) */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 25px;
+            transition: 0.4s;
+        }
+
+        .info-card:hover {
+            background: rgba(255, 255, 255, 0.07);
+            transform: translateY(-10px);
+            border-color: rgba(138, 43, 226, 0.5);
+        }
+
+        .info-card h3 {
+            color: #bf00ff;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            border-bottom: 1px solid rgba(191, 0, 255, 0.3);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        .info-card p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #ddd;
+        }
+
+        .info-card .highlight {
+            color: #00ff7f;
+            font-weight: bold;
+        }
+
+        .rubika-link {
+            color: #00ff7f;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            display: block;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .rubika-link:hover {
+            text-shadow: 0 0 10px #00ff7f;
+            letter-spacing: 1px;
+        }
+
+        /* ۸. FOOTER */
+        .footer {
+            margin-top: 60px;
+            color: #555;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="cursor"></div>
+
+    <div class="bg-container">
+        <div class="orb" style="width: 500px; height: 500px; background: #4b0082; top: -10%; left: -10%;"></div>
+        <div class="orb" style="width: 400px; height: 400px; background: #8a2be2; bottom: 10%; right: -5%;"></div>
+        <div class="orb" style="width: 300px; height: 300px; background: #00ff7f; top: 40%; left: 50%;"></div>
+    </div>
+
+    <div class="wrapper">
+        <!-- لوگو -->
+        <div class="logo-container">
+            <img src="https://cdn.imgurl.ir/uploads/x08735_GVvuZW2t61FfHE9pFhyYzQOrtag-voSpMySBQ2CG1YOcTUafKA.png" alt="Voidland" class="logo">
+        </div>
+
+        <!-- آی‌پی و وضعیت -->
+        <div class="ip-card" onclick="copyIP()">
+            <div class="status-badge">SERVER ONLINE 🟢</div>
+            <span class="ip-address" id="ipAddr">play.voidland.ir</span>
+            <div style="font-size: 0.8rem; color: #888; margin-top: 10px;">Click to copy IP</div>
+        </div>
+
+        <a href="https://ble.ir/rankvoidland_bot" target="_blank" class="btn-premium">🛒 UPGRADE YOUR RANK</a>
+
+        <!-- بخش اطلاعات -->
+        <div class="info-grid">
+            
+            <!-- درباره ما -->
+            <div class="info-card">
+                <h3>درباره‌ی ما</h3>
+                <p>سرور <span class="highlight">Voidland</span> تجربه‌ای متفاوت از دنیای ماینکرفت است. ما اینجا هستیم تا با امکانات پیشرفته، هیجان و امنیت بالا، بهترین محیط را برای گیمرهای حرفه‌ای فراهم کنیم.</p>
+            </div>
+
+            <!-- کانال روبیکا -->
+            <div class="info-card">
+                <h3>ارتباط با ما</h3>
+                <p>برای دریافت آخرین اخبار، آپدیت‌ها و قرعه‌کشی‌ها، حتماً عضو کانال روبیکا شوید:</p>
+                <a href="https://rubika.ir/WID_LAND" target="_blank" class="rubika-link">@WID_LAND</a>
+            </div>
+
+            <!-- تیم مدیریت -->
+            <div class="info-card">
+                <h3>تیم مدیریت</h3>
+                <p>✨ مالک سرور: <span class="highlight">limon green_yt</span></p>
+                <p>🛠️ دولوپرا: <span class="highlight">Alicraftyt</span></p>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            &copy; 2026 VOIDLAND | All Rights Reserved
+        </div>
+    </div>
+
+    <script>
+        const cursor = document.getElementById('cursor');
+        const ipAddr = document.getElementById('ipAddr');
+
+        // حرکت موس
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // افکت کلیک
+        document.addEventListener('click', (e) => {
+            const flare = document.createElement('div');
+            flare.className = 'click-flare';
+            flare.style.left = (e.clientX - 5) + 'px';
+            flare.style.top = (e.clientY - 5) + 'px';
+            document.body.appendChild(flare);
+            setTimeout(() => flare.remove(), 600);
+        });
+
+        // کپی آی‌پی
+        function copyIP() {
+            const text = ipAddr.innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = ipAddr.innerText;
+                ipAddr.innerText = "COPIED! ✓";
+                setTimeout(() => {
+                    ipAddr.innerText = originalText;
+                }, 1500);
+            });
+        }
+
+        // پارالاکس پس‌زمینه
+        document.addEventListener('mousemove', (e) => {
+            const xبسیار خب، طبق دستور شما **پنل مدیریت را کاملاً حذف می‌کنم** تا سایت فقط جنبه نمایش اطلاعات (Landing Page) داشته باشد و ظاهر آن خلوت‌تر و حرفه‌ای‌تر شود. 
+
+در این نسخه، اطلاعات "درباره ما"، "کانال روبیکا" و "وضعیت سرور" را با همان استایل **Glassmorphism** و انیمیشن‌های نئونی به بدنه سایت اضافه می‌کنم.
+```html
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VOIDLAND | THE ULTIMATE EXPERIENCE</title>
+<style>
+/* ۱. RESET & BASE */
+* { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+
+body {
+background: #050505;
+color: #fff;
+font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+overflow-x: hidden;
+min-height: 100vh;
+}
+
+/* ۲. GOD-LEVEL ANIMATED BACKGROUND */
+.bg-container {
+position: fixed;
+top: 0; left: 0; width: 100%; height: 100%;
+z-index: -1;
+background: radial-gradient(circle at 50% 50%, #1a0b2e 0%, #050505 100%);
+overflow: hidden;
+}
+
+.orb {
+position: absolute;
+border-radius: 50%;
+filter: blur(120px);
+opacity: 0.5;
+animation: orbit 25s infinite linear;
+}
+
+@keyframes orbit {
+from { transform: rotate(0deg) translateX(200px) rotate(0deg); }
+to { transform: rotate(360deg) translateX(200px) rotate(-360deg); }
+}
+
+/* ۳. CUSTOM CURSOR */
+#cursor {
+position: fixed;
+width: 18px; height: 18px;
+background: rgba(0, 255, 127, 0.6);
+border-radius: 50%;
+pointer-events: none;
+z-index: 9999;
+transform: translate(-50%, -50%);
+box-shadow: 0 0 20px #00ff7f, 0 0 40px #00ff7f;
+}
+
+.click-flare {
+position: absolute;
+width: 12px; height: 12px;
+background: #00ff7f;
+border-radius: 50%;
+pointer-events: none;
+animation: flare 0.6s ease-out forwards;
+z-index: 10000;
+}
+
+@keyframes flare {
+0% { transform: scale(1); opacity: 1; }
+100% { transform: scale(8); opacity: 0; }
+}
+
+/* ۴. LAYOUT */
+.wrapper {
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 60px 20px;
+z-index: 1;
+}
+
+/* لوگو */
+.logo-container {
+position: relative;
+margin-bottom: 40px;
+animation: floatLogo 4s infinite ease-in-out;
+}
+
+.logo {
+width: 240px;
+filter: drop-shadow(0 0 25px rgba(138, 43, 226, 0.8));
+border-radius: 30px;
+}
+
+@keyframes floatLogo {
+0%, 100% { transform: translateY(0) scale(1); }
+50% { transform: translateY(-20px) scale(1.03); }
+}
+
+/* آی‌پی */
+.ip-card {
+background: rgba(255, 255, 255, 0.03);
+backdrop-filter: blur(20px);
+border: 1px solid rgba(138, 43, 226, 0.3);
+padding: 25px;
+border-radius: 25px;
+text-align: center;
+width: 100%;
+max-width: 450px;
+margin-bottom: 40px;
+cursor: pointer;
+transition: 0.3s;
+}
+.ip-card:hover { transform: scale(1.02); border-color: #00ff7f; }
+
+.ip-address {
+font-size: 1.8rem;
+font-weight: 900;
+color: #00ff7f;
+display: block;
+text-shadow: 0 0 15px rgba(0, 255, 127, 0.5);
+}
+
+/* ۵. دکمه خرید */
+.btn-premium {
+background: linear-gradient(90deg, #8a2be2, #bf00ff, #8a2be2);
+background-size: 200% auto;
+padding: 16px 45px;
+border-radius: 15px;
+color: white;
+text-decoration: none;
+font-weight: 900;
+font-size: 1.2rem;
+box-shadow: 0 10px 30px rgba(191, 0, 255, 0.4);
+transition: 0.4s;
+animation: shine 3s linear infinite;
+margin-bottom: 50px;
+}
+@keyframes shine { to { background-position: 200% center; } }
+.btn-premium:hover { transform: scale(1.1); box-shadow: 0 15px 40px rgba(191, 0, 255, 0.7); }
+
+/* ۶. بخش‌های جدید (گرید اطلاعات) */
+.info-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+gap: 20px;
+width: 100%;
+max-width: 1000px;
+}
+
+.glass-card {
+background: rgba(255, 255, 255, 0.02);
+backdrop-filter: blur(15px);
+border: 1px solid rgba(255, 255, 255, 0.08);
+padding: 25px;
+border-radius: 20px;
+transition: 0.4s;
+}
+
+.glass-card:hover {
+background: rgba(255, 255, 255, 0.05);
+border-color: rgba(138, 43, 226, 0.5);
+transform: translateY(-5px);
+}
+
+.card-title {
+font-size: 1.1rem;
+font-weight: 800;
+color: #bf00ff;
+margin-bottom: 15px;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.card-content {
+font-size: 0.95rem;
+line-height: 1.8;
+color: #ccc;
+}
+
+/* وضعیت سرور */
+.status-container {
+display: flex;
+align-items: center;
+gap: 10px;
+font-weight: bold;
+}
+.status-dot {
+width: 12px;
+height: 12px;
+border-radius: 50%;
+background: #00ff7f;
+box-shadow: 0 0 10px #00ff7f;
+animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+0% { opacity: 1; transform: scale(1); }
+50% { opacity: 0.4; transform: scale(1.2); }
+100% { opacity: 1; transform: scale(1); }
+}
+
+/* لینک‌ها */
+.info-link {
+color: #00ff7f;
+text-decoration: none;
+font-weight: bold;
+transition: 0.3s;
+}
+.info-link:hover { text-shadow: 0 0 10px #00ff7f; text-decoration: underline; }
+
+.social-item { margin-bottom: 10px; display: block; }
+.label { color: #888; font-size: 0.8rem; margin-left: 5px; }
+
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+
+<div class="bg-container">
+<div class="orb" style="width: 500px; height: 500px; background: #4b0082; top: -10%; left: -10%;"></div>
+<div class="orb" style="width: 400px; height: 400px; background: #8a2be2; bottom: 10%; right: -5%;"></div>
+<div class="orb" style="width: 300px; height: 300px; background: #00ff7f; top: 40%; left: 50%; opacity: 0.3;"></div>
+</div>
+
+<div class="wrapper">
+<!-- لوگو -->
+<div class="logo-container">
+<img src="https://cdn.imgurl.ir/uploads/x08735_GVvuZW2t61FfHE9pFhyYzQOrtag-voSpMySBQ2CG1YOcTUafKA.png" alt="Voidland" class="logo">
+</div>
+
+<!-- آی‌پی -->
+<div class="ip-card" onclick="copyIP()">
+<div style="font-size: 0.8rem; color: #888; margin-bottom: 5px;">CLICK TO COPY IP</div>
+<span class="ip-address" id="ipAddr">play.voidland.ir</span>
+</div>
+
+<!-- دکمه خرید -->
+<a href="https://ble.ir/rankvoidland_bot" target="_blank" class="btn-premium">🛒 خرید رنک و ارتقا</a>
+
+<!-- بخش اطلاعات جدید -->
+<div class="info-grid">
+
+<!-- درباره ما -->
+<div class="glass-card">
+<div class="card-title">✨ درباره ما</div>
+<div class="card-content">
+سرور <b>Voidland</b> تجربه‌ای متفاوت از ماجراجویی در دنیای ماینکرفت است. ما با هدف ایجاد محیطی منصفانه و هیجان‌انگیز، بهترین سیستم‌های گیم‌پلی را برای شما فراهم کرده‌ایم.
+</div>
+</div>
+
+<!-- وضعیت و اخبار -->
+<div class="glass-card">
+<div class="card-title">📡 وضعیت سرور</div
+<div class="card-content">
+<div class="status-container">
+<div class="status-dot"></div>
+<span style="color: #00ff7f;">سرور آنلاین است</span>
+</div>
+<p style="margin-top: 15px; font-size: 0.85rem; color: #888;">آخرین اخبار: آپدیت جدید رنک‌ها در دسترس است!</p>
+</div>
+</div>
+
+<!-- اطلاعات تیم و ارتباطات -->
+<div class="glass-card">
+<div class="card-title">🔗 ارتباط با ما</div>
+<di class="card-content">
+<div class="social-item">
+<span class="label">کانال روبیکا:</span>
+<a href="https://rubika.ir/WID_LAND" target="_blank" class="info-link">@WID_LAND</a>
+</div>
+<div class="social-item">
+<span class="label">مالک سرور:</span>
+<span style="color: #fff;">limon green_yt</span>
+</div>
+<div class="social-item">
+<span class="label">دوولور سرور:</span>
+<span style="color: #fff;">Alicraftyt</span>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+const cursor = document.getElementById('cursor');
+const ipAddr = document.getElementById('ipAddr');
+
+// ۱. حرکت موس سفارشی
+document.addEventListener('mousemove', (e) => {
+cursor.style.left = e.clientX + 'px';
+cursor.style.top = e.clientY + 'px';
+});
+
+// ۲. افکت کلیک
+document.addEventListener('click', (e) => {
+const flare = document.createElement('div');
+flare.className = 'click-flare';
+flare.style.left = (e.clientX - 6) + 'px';
+flare.style.top = (e.clientY - 6) + 'px';
+document.body.appendChild(flare);
+setTimeout(() => flare.remove(), 600);
+});
+
+// ۳. کپی کردن آی‌پی
+function copyIP() {
+const text = ipAddr.innerText;
+navigator.clipboard.writeText(text).then(() => {
+const originalText = ipAddr.innerText;
+ipAddr.innerText = "COPIED! ✓";
+ipAddr.style.color = "#ffffff";
+setTimeout(() => {
+ipAddr.innerText = originalText;
+ipAddr.style.color = "#00ff7f";
+}, 1500);
+});
+}
+
+// ۴. حرکت Orbs با موس (Parallax)
+document.addEventListener('mousemove', (e) => {
+const x = (e.clientX / window.innerWidth) - 0.5;
+const y = (e.clientY / window.innerHeight) - 0.5;
+const orbs = document.querySelectorAll('.orb');
+orbs.forEach((orb, index) => {
+const speed = (index + 1) * 30;
+orb.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+});
+});
+</script>
+</body>
+</html>
